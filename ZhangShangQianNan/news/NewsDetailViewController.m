@@ -42,7 +42,7 @@
     //初始化webview
     self.article = nil;
     CGRect frame = self.view.frame;
-    frame.size.height = frame.size.height;
+    frame.size.height = frame.size.height - self.navigationController.navigationBar.frame.size.height - 18;
     self.detailWebView = [[UIWebView alloc] initWithFrame:frame];
     self.detailWebView.delegate = self;
     self.detailWebView.hidden = YES;
@@ -254,7 +254,7 @@
 
 - (void)addFavorite{
     if (self.userStatus.isLogined) {
-        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=articlemisc&ac=addfavorite&aid=%ld",(long)self.newsID]];
+        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=articlemisc&ac=addfavorite&uid=%ld&aid=%ld",(long)self.userStatus.uid,(long)self.newsID]];
         if ([data length] > 0) {[[DSXUtil sharedUtil] successWindowInView:self.view Size:CGSizeMake(100, 80) Message:@"收藏成功"];}
     }else {
         [self showLogin];

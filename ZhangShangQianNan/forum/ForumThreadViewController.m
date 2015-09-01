@@ -163,7 +163,7 @@
 
 - (void)addFavorite{
     if (self.userStatus.isLogined) {
-        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=forummisc&ac=addfavorite&tid=%ld",(long)self.tid]];
+        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=forummisc&ac=addfavorite&uid=%ld&tid=%ld",(long)self.userStatus.uid,(long)self.tid]];
         if (data) {
             [[DSXUtil sharedUtil] successWindowInView:self.view Size:CGSizeMake(100, 80) Message:@"收藏成功"];
         }

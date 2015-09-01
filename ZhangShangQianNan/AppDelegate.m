@@ -84,7 +84,7 @@
     //新帖
     ForumDisplayViewController *displayController = [[ForumDisplayViewController alloc] init];
     UINavigationController *displayNavigation = [[UINavigationController alloc] initWithRootViewController:displayController];
-    [displayNavigation setTabBarItem:[self taBarItemWithTitle:@"新帖" Image:@"icon-time.png" SelectedImage:@"icon-timefill.png"]];
+    [displayNavigation setTabBarItem:[self taBarItemWithTitle:@"帖子" Image:@"icon-time.png" SelectedImage:@"icon-timefill.png"]];
     
     //板块
     ForumViewController *forumController = [[ForumViewController alloc] init];
