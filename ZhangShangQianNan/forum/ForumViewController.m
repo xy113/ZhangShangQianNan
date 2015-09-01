@@ -10,7 +10,10 @@
 #import "MyLoginViewController.h"
 #import "MyTableViewController.h"
 #import "MyThreadViewController.h"
+#import "MyNotificationViewController.h"
+#import "MyFavorViewController.h"
 #import "DSXCommon.h"
+#import "MyItemView.h"
 
 @implementation ForumViewController
 
@@ -34,8 +37,34 @@
         button.layer.cornerRadius = 5.0;
         button.layer.masksToBounds = YES;
         [button setImage:self.userStatus.avatar forState:UIControlStateNormal];
-        [button addTarget:self action:@selector(goMyCenter) forControlEvents:UIControlEventTouchDown];
+        [button addTarget:self action:@selector(showMenu) forControlEvents:UIControlEventTouchDown];
         self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        _menuBar = [[UIView alloc] initWithFrame:CGRectMake(0, -20, SWIDTH, 70)];
+        CGFloat itemWidth = SWIDTH/3;
+        MyItemView *threadItem = [[MyItemView alloc] initWithFrame:CGRectMake(0, 10, itemWidth, 40)];
+        [threadItem setImage:@"icon-timefill.png" title:@"主题"];
+        [threadItem setTag:101];
+        [threadItem addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
+        [_menuBar addSubview:threadItem];
+        
+        MyItemView *messageItem = [[MyItemView alloc] initWithFrame:CGRectMake(itemWidth, 10, itemWidth, 40)];
+        [messageItem setImage:@"icon-messagefill.png" title:@"消息"];
+        [messageItem setTag:102];
+        [messageItem addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
+        [_menuBar addSubview:messageItem];
+        
+        MyItemView *favorItem = [[MyItemView alloc] initWithFrame:CGRectMake(itemWidth*2, 10, itemWidth, 40)];
+        [favorItem setImage:@"icon-favorfill.png" title:@"收藏"];
+        [favorItem setTag:103];
+        [favorItem addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
+        [_menuBar addSubview:favorItem];
+        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, 70, SWIDTH, 0.5)];
+        bottomLine.backgroundColor = [UIColor grayColor];
+        [_menuBar addSubview:bottomLine];
+        [_menuBar setBackgroundColor:WHITEBGCOLOR];
+        //[_menuBar setHidden:YES];
+        [self.navigationController.view insertSubview:_menuBar belowSubview:self.navigationController.navigationBar];
         
     }else{
         self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithImage:@"icon-my-avatar.png" target:self action:@selector(showLogin)];
@@ -51,7 +80,6 @@
     self.forumCollectionView.delegate = self;
     self.forumCollectionView.dataSource = self;
     self.forumCollectionView.allowsMultipleSelection = YES;
-    //[self.view addSubview:self.forumCollectionView];
     
     [self.forumCollectionView registerClass:[ForumCollectionViewCell class] forCellWithReuseIdentifier:@"forumCollectionCell"];
     [self.forumCollectionView registerClass:[ForumReusableView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"sectionHeadView"];
@@ -77,11 +105,16 @@
 }
 
 
+- (void)viewWillDisappear:(BOOL)animated{
+    _menuBar.frame = CGRectMake(0, -20, SWIDTH, 70);
+}
+
+
 #pragma mark - actions
 - (void)showLogin{
     MyLoginViewController *loginViewController = [[MyLoginViewController alloc] init];
     [self presentViewController:loginViewController animated:YES completion:^{
-        
+    
     }];
 }
 
@@ -103,17 +136,48 @@
     }];
 }
 
-- (void)goMyCenter{
-    //MyTableViewController *myViewController = [[MyTableViewController alloc] init];
-    //[self.navigationController pushViewController:myViewController animated:YES];
-    //[self.tabBarController setSelectedIndex:4];
-    MyThreadViewController *threadViewController = [[MyThreadViewController alloc] init];
-    threadViewController.title = @"我的主题";
-    [self.navigationController pushViewController:threadViewController animated:YES];
+- (void)showMenu{
+    CGPoint center = _menuBar.center;
+    if (_menuBar.frame.origin.y < 0) {
+        center.y = center.y + 85;
+    }else {
+        center.y = center.y - 85;
+    }
+    [UIView animateWithDuration:0.4 animations:^{
+        _menuBar.center = center;
+    }];
 }
 
 - (void)userStatusChanged{
     [self viewDidLoad];
+}
+
+- (void)buttonClick:(id)sender{
+    if (self.userStatus.isLogined) {
+        MyItemView *currentButton = (MyItemView *)sender;
+        UINavigationController *navigation;
+        if (currentButton.tag == 101) {
+            MyThreadViewController *threadViewController = [[MyThreadViewController alloc] init];
+            [threadViewController setTitle:@"我的主题"];
+            navigation = [[UINavigationController alloc] initWithRootViewController:threadViewController];
+            [self presentViewController:navigation animated:YES completion:nil];
+        }
+        if (currentButton.tag == 102) {
+            MyNotificationViewController *notificationController = [[MyNotificationViewController alloc] init];
+            [notificationController setTitle:@"我的消息"];
+            navigation = [[UINavigationController alloc] initWithRootViewController:notificationController];
+            [self presentViewController:navigation animated:YES completion:nil];
+        }
+        if (currentButton.tag == 103) {
+            MyFavorViewController *favorViewController = [[MyFavorViewController alloc] init];
+            [favorViewController setTitle:@"我的收藏"];
+            navigation = [[UINavigationController alloc] initWithRootViewController:favorViewController];
+            [self presentViewController:navigation animated:YES completion:nil];
+        }
+        
+    }else {
+        [self showLogin];
+    }
 }
 
 #pragma mark - CollectionView delegate

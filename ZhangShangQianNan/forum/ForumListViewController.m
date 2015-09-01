@@ -34,7 +34,9 @@
     self.navigationItem.rightBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleAdd target:self action:@selector(postThread)];
     
     _keyName = [NSString stringWithFormat:@"forum_%ld",(long)self.fid];
-    self.mainTableView = [[DSXTableView alloc] initWithFrame:self.view.frame];
+    CGRect frame = self.view.frame;
+    frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
+    self.mainTableView = [[DSXTableView alloc] initWithFrame:frame];
     self.mainTableView.pageSize = 20;
     self.mainTableView.tableViewDelegate = self;
     [self.view addSubview:self.mainTableView];

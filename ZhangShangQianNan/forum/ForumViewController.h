@@ -12,7 +12,10 @@
 #import "ForumListViewController.h"
 #import "DSXUserStatus.h"
 
-@interface ForumViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource>
+@interface ForumViewController : UIViewController<UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UITableViewDelegate,UITableViewDataSource>{
+    @private
+    UIView *_menuBar;
+}
 
 @property(nonatomic,retain)UICollectionView *forumCollectionView;
 @property(nonatomic,retain)UITableView *forumTableView;

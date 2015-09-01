@@ -123,7 +123,7 @@
     if (indexPath.section == 0) {
         CGFloat itemWidth = width/3;
         MyItemView *threadView = [[MyItemView alloc] initWithFrame:CGRectMake(0, 10, itemWidth, 50)];
-        [threadView setImage:@"icon-my-thread.png" title:@"主题"];
+        [threadView setImage:@"icon-timefill.png" title:@"主题"];
         [threadView setTag:101];
         [threadView addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
         [cell.contentView addSubview:threadView];
@@ -132,7 +132,7 @@
         [cell.contentView addSubview:separatorLine1];
         
         MyItemView *messageView = [[MyItemView alloc] initWithFrame:CGRectMake(itemWidth, 10, itemWidth, 50)];
-        [messageView setImage:@"icon-message.png" title:@"消息"];
+        [messageView setImage:@"icon-messagefill.png" title:@"消息"];
         [messageView setTag:102];
         [messageView addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
         [cell.contentView addSubview:messageView];
@@ -142,7 +142,7 @@
         [cell.contentView addSubview:separatorLine2];
         
         MyItemView *favorView = [[MyItemView alloc] initWithFrame:CGRectMake(itemWidth*2, 10, itemWidth, 50)];
-        [favorView setImage:@"icon-my-favorite.png" title:@"收藏"];
+        [favorView setImage:@"icon-favorfill.png" title:@"收藏"];
         [favorView setTag:103];
         [favorView addTarget:self action:@selector(buttonClick:) forControlEvents:UIControlEventTouchDown];
         [cell.contentView addSubview:favorView];

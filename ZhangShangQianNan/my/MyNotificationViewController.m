@@ -29,7 +29,7 @@
     
     CGRect frame = self.view.frame;
     frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
-    self.tableView = [[DSXTableView alloc] initWithFrame:self.view.frame];
+    self.tableView = [[DSXTableView alloc] initWithFrame:frame];
     self.tableView.tableViewDelegate = self;
     self.tableView.pageSize = 20;
     [self.view addSubview:self.tableView];

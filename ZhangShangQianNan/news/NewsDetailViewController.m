@@ -69,6 +69,7 @@
     [self.navigationController.toolbar addSubview:_bottomButton];
     
     _viewCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(SWIDTH-70, 6, 60, 32)];
+    [_viewCommentButton setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"barbg.png"]]];
     [_viewCommentButton addTarget:self action:@selector(viewComment) forControlEvents:UIControlEventTouchDown];
     [self.navigationController.toolbar addSubview:_viewCommentButton];
     for (UIView *subview in _viewCommentButton.subviews) {

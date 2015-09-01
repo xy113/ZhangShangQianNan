@@ -292,6 +292,12 @@
 		71A7214D1B95A17000BC04E0 /* icon-roundadd-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */; };
 		71A7214E1B95A17000BC04E0 /* icon-roundadd-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */; };
 		71A7214F1B95A17000BC04E0 /* icon-roundadd-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */; };
+		71A721561B95D3EC00BC04E0 /* icon-favorfill.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721501B95D3EC00BC04E0 /* icon-favorfill.png */; };
+		71A721571B95D3EC00BC04E0 /* icon-favorfill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721511B95D3EC00BC04E0 /* icon-favorfill@2x.png */; };
+		71A721581B95D3EC00BC04E0 /* icon-favorfill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721521B95D3EC00BC04E0 /* icon-favorfill@3x.png */; };
+		71A721591B95D3EC00BC04E0 /* icon-messagefill.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721531B95D3EC00BC04E0 /* icon-messagefill.png */; };
+		71A7215A1B95D3EC00BC04E0 /* icon-messagefill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721541B95D3EC00BC04E0 /* icon-messagefill@2x.png */; };
+		71A7215B1B95D3EC00BC04E0 /* icon-messagefill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A721551B95D3EC00BC04E0 /* icon-messagefill@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -666,6 +672,12 @@
 		71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue.png"; sourceTree = "<group>"; };
 		71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue@2x.png"; sourceTree = "<group>"; };
 		71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue@3x.png"; sourceTree = "<group>"; };
+		71A721501B95D3EC00BC04E0 /* icon-favorfill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-favorfill.png"; sourceTree = "<group>"; };
+		71A721511B95D3EC00BC04E0 /* icon-favorfill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-favorfill@2x.png"; sourceTree = "<group>"; };
+		71A721521B95D3EC00BC04E0 /* icon-favorfill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-favorfill@3x.png"; sourceTree = "<group>"; };
+		71A721531B95D3EC00BC04E0 /* icon-messagefill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-messagefill.png"; sourceTree = "<group>"; };
+		71A721541B95D3EC00BC04E0 /* icon-messagefill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-messagefill@2x.png"; sourceTree = "<group>"; };
+		71A721551B95D3EC00BC04E0 /* icon-messagefill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-messagefill@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -965,6 +977,12 @@
 		71A1A6D91B9440DF00072A81 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				71A721501B95D3EC00BC04E0 /* icon-favorfill.png */,
+				71A721511B95D3EC00BC04E0 /* icon-favorfill@2x.png */,
+				71A721521B95D3EC00BC04E0 /* icon-favorfill@3x.png */,
+				71A721531B95D3EC00BC04E0 /* icon-messagefill.png */,
+				71A721541B95D3EC00BC04E0 /* icon-messagefill@2x.png */,
+				71A721551B95D3EC00BC04E0 /* icon-messagefill@3x.png */,
 				71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */,
 				71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */,
 				71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */,
@@ -1458,6 +1476,8 @@
 				71A1A7B71B9440DF00072A81 /* icon-my.png in Resources */,
 				71A1A7DC1B9440DF00072A81 /* icon-success@2x.png in Resources */,
 				71A1A7921B9440DF00072A81 /* icon-commentnum.png in Resources */,
+				71A7215A1B95D3EC00BC04E0 /* icon-messagefill@2x.png in Resources */,
+				71A7215B1B95D3EC00BC04E0 /* icon-messagefill@3x.png in Resources */,
 				71A1A7EF1B9440DF00072A81 /* icon-viewlist@3x.png in Resources */,
 				71A1A7631B9440DF00072A81 /* launch.png in Resources */,
 				71A1A7C21B9440DF00072A81 /* icon-pic@3x.png in Resources */,
@@ -1474,12 +1494,14 @@
 				71A1A7E91B9440DF00072A81 /* icon-toright@3x.png in Resources */,
 				71A1A7A81B9440DF00072A81 /* icon-message.png in Resources */,
 				71A1A7B41B9440DF00072A81 /* icon-my-thread.png in Resources */,
+				71A721591B95D3EC00BC04E0 /* icon-messagefill.png in Resources */,
 				71A1A7751B9440DF00072A81 /* zhi.png in Resources */,
 				71A1A7CA1B9440DF00072A81 /* icon-reply@2x.png in Resources */,
 				71A1A7D81B9440DF00072A81 /* icon-sort.png in Resources */,
 				71A1A7DE1B9440DF00072A81 /* icon-time.png in Resources */,
 				71A1A7991B9440DF00072A81 /* icon-favor@3x.png in Resources */,
 				71A1A77A1B9440DF00072A81 /* Images.xcassets in Resources */,
+				71A721571B95D3EC00BC04E0 /* icon-favorfill@2x.png in Resources */,
 				71A1A75E1B9440DF00072A81 /* imageplaceholder.png in Resources */,
 				71A1A75D1B9440DF00072A81 /* hunyin.png in Resources */,
 				71A1A8C61B94411F00072A81 /* ShareSDKiPadSimpleShareViewUI.bundle in Resources */,
@@ -1507,6 +1529,7 @@
 				71A1A7911B9440DF00072A81 /* icon-browse-small@3x.png in Resources */,
 				71A1A7E11B9440DF00072A81 /* icon-timefill.png in Resources */,
 				71A1A79A1B9440DF00072A81 /* icon-goback.png in Resources */,
+				71A721581B95D3EC00BC04E0 /* icon-favorfill@3x.png in Resources */,
 				71A1A7D41B9440DF00072A81 /* icon-search@3x.png in Resources */,
 				71A1A78C1B9440DF00072A81 /* icon-add.png in Resources */,
 				71A1A7581B9440DF00072A81 /* button-bg-red.png in Resources */,
@@ -1580,6 +1603,7 @@
 				71A1A7D91B9440DF00072A81 /* icon-sort@2x.png in Resources */,
 				71A1A7E41B9440DF00072A81 /* icon-toleft.png in Resources */,
 				71A1A7561B9440DF00072A81 /* forums.plist in Resources */,
+				71A721561B95D3EC00BC04E0 /* icon-favorfill.png in Resources */,
 				71A1A76A1B9440DF00072A81 /* shou.png in Resources */,
 				71A1A7C11B9440DF00072A81 /* icon-pic@2x.png in Resources */,
 				71A1A7A91B9440DF00072A81 /* icon-message@2x.png in Resources */,
