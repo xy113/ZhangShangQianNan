@@ -31,11 +31,14 @@
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
     self.navigationItem.rightBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleAdd target:self action:@selector(showThread)];
     
-    self.tableView = [[DSXTableView alloc] initWithFrame:self.view.frame];
+    CGRect frame = self.view.frame;
+    frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
+    self.tableView = [[DSXTableView alloc] initWithFrame:frame];
     self.tableView.tableViewDelegate = self;
     self.tableView.pageSize = 20;
     [self.view addSubview:self.tableView];
     self.operationQueue = [[NSOperationQueue alloc] init];
+    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:@"myfavor"]];
     [self.tableView.waitingView startAnimating];
     [self tableViewStartRefreshing];
 }
@@ -48,20 +51,14 @@
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
-    NSData *newData;
-    if ([data length] > 2) {
-        newData = data;
-        if (self.tableView.isRefreshing) {
-            [[NSUserDefaults standardUserDefaults] setObject:newData forKey:@"myfavor"];
-        }
-    }else {
-        newData = [[NSUserDefaults standardUserDefaults] dataForKey:@"myfavor"];
+    if (self.tableView.isRefreshing && data.length > 2) {
+       [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"myfavor"];
     }
-    [self.tableView reloadTableViewWithData:newData];
+    [self.tableView reloadTableViewWithData:data];
 }
 
 - (void)clickBack{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)showThread{
@@ -73,16 +70,17 @@
 #pragma mark - DSXTableView delegate
 - (void)tableViewStartRefreshing{
     _page = 1;
+    [self.tableView setIsRefreshing:YES];
     [self downloadData];
+}
+
+- (void)tableViewRefreshedNothing{
+    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(160, 80) Message:@"你还没有收藏过信息"];
 }
 
 - (void)tableViewStartLoading{
     _page++;
     [self downloadData];
-}
-
-- (void)tableViewLoadNothing{
-    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(160, 90) Message:@"你没有收藏信息"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

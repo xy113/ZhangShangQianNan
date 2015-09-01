@@ -103,7 +103,8 @@
     //NSLog(@"%@",[[NSString alloc] initWithData:returns encoding:NSUTF8StringEncoding]);
     if ([returns length] > 0) {
         [[DSXUtil sharedUtil] successWindowInView:_mainView Size:CGSizeMake(120, 80) Message:@"发布成功"];
-        [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"postSuccess" object:nil];
+        [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(clickBack) userInfo:nil repeats:NO];
     }else {
         [[DSXUtil sharedUtil] wrongWindowInView:_mainView Size:CGSizeMake(120, 90) Message:@"发布失败"];
     }

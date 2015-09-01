@@ -11,9 +11,7 @@
 #import "ForumPostViewController.h"
 #import "MyLoginViewController.h"
 #import "DSXUserStatus.h"
-#import "DSXUtil.h"
-#import "DSXControl.h"
-#import "DSXUIButton.h"
+#import "DSXCommon.h"
 
 @interface ForumListViewController ()
 
@@ -30,6 +28,7 @@
     self.view.backgroundColor = WHITEBGCOLOR;
     self.userStatus = [[DSXUserStatus alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userStatusChanged) name:UserStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(postSucceess) name:@"postSuccess" object:nil];
     //返回按钮
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
     self.navigationItem.rightBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleAdd target:self action:@selector(postThread)];
@@ -41,6 +40,7 @@
     [self.view addSubview:self.mainTableView];
     
     self.operationQueue = [[NSOperationQueue alloc] init];
+    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:_keyName]];
     [self.mainTableView.waitingView startAnimating];
     [self tableViewStartRefreshing];
 }
@@ -60,12 +60,8 @@
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
-    if ([data length] > 2) {
-        if (self.mainTableView.isRefreshing) {
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:_keyName];
-        }
-    }else {
-        data = [[NSUserDefaults standardUserDefaults] dataForKey:_keyName];
+    if (self.mainTableView.isRefreshing && data.length > 2) {
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:_keyName];
     }
     [self.mainTableView reloadTableViewWithData:data];
 }
@@ -90,20 +86,26 @@
     self.userStatus = [DSXUserStatus new];
 }
 
+- (void)postSucceess{
+    [self.mainTableView.waitingView startAnimating];
+    [self tableViewStartRefreshing];
+}
+
 
 #pragma mark - Table view data source
 - (void)tableViewStartRefreshing{
     _page = 1;
+    [self.mainTableView setIsRefreshing:YES];
     [self downloadData];
+}
+
+- (void)tableViewRefreshedNothing{
+    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 90) Message:@"该板块尚无主题"];
 }
 
 - (void)tableViewStartLoading{
     _page++;
     [self downloadData];
-}
-
-- (void)tableViewLoadNothing{
-    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 90) Message:@"该板块尚无主题"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

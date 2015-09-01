@@ -35,7 +35,6 @@
     [self.view addSubview:self.mainScrollView];
     
     //设置栏目
-    CGFloat viewHeight = SHEIGHT - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height+19);
     NSOperationQueue *operationQueue = [[NSOperationQueue alloc] init];
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"newsColumns" ofType:@"plist"];
     NSArray *columns = [NSArray arrayWithContentsOfFile:plistPath];
@@ -43,14 +42,15 @@
     self.scrollBar.selectedIndex = 0;
     self.scrollBar.buttonDelegate = self;
     [self.scrollBar show];
+    CGRect frame = self.view.frame;
+    CGFloat barHeight = self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18;
     for (int i=0; i<[columns count]; i++) {
-        NewsCustomTableView *tableView = [[NewsCustomTableView alloc] initWithFrame:CGRectMake(SWIDTH*i, 0, SWIDTH, viewHeight)];
+        NewsCustomTableView *tableView = [[NewsCustomTableView alloc] initWithFrame:CGRectMake(SWIDTH*i, frame.origin.x, SWIDTH, frame.size.height-barHeight)];
         tableView.catid = [[columns[i] objectForKey:@"catid"] intValue];
         tableView.detailDelegate = self;
         tableView.operationQueue = operationQueue;
         [tableView show];
         [self.mainScrollView addSubview:tableView];
-        
     }
     [self.mainScrollView setContentSize:CGSizeMake([columns count]*SWIDTH, 0)];
 }
@@ -76,11 +76,6 @@
     [self.navigationController pushViewController:detailViewController animated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - scrollView delegate
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if (self.mainScrollView == scrollView) {
@@ -101,6 +96,11 @@
             }
         }
     }
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

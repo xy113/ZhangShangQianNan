@@ -20,4 +20,6 @@
 - (void)successWindowInView:(UIView *)view Size:(CGSize)size Message:(NSString *)message;
 - (void)wrongWindowInView:(UIView *)view Size:(CGSize)size Message:(NSString *)message;
 - (void)informationWindowInView:(UIView *)view Size:(CGSize)size Message:(NSString *)message;
+- (UIView *)waitingWindowInView:(UIView *)view Size:(CGSize)size Message:(NSString *)message;
++ (void)closeWindow:(UIView *)window;
 @end

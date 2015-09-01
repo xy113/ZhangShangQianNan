@@ -42,7 +42,7 @@
     //初始化webview
     self.article = nil;
     CGRect frame = self.view.frame;
-    frame.size.height = frame.size.height - 45;
+    frame.size.height = frame.size.height;
     self.detailWebView = [[UIWebView alloc] initWithFrame:frame];
     self.detailWebView.delegate = self;
     self.detailWebView.hidden = YES;
@@ -68,20 +68,22 @@
     [_bottomButton addTarget:self action:@selector(showPostView) forControlEvents:UIControlEventTouchDown];
     [self.navigationController.toolbar addSubview:_bottomButton];
     
-    UIButton *viewCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(SWIDTH-70, 6, 60, 32)];
-    [viewCommentButton addTarget:self action:@selector(viewComment) forControlEvents:UIControlEventTouchDown];
-    [self.navigationController.toolbar addSubview:viewCommentButton];
-    
+    _viewCommentButton = [[UIButton alloc] initWithFrame:CGRectMake(SWIDTH-70, 6, 60, 32)];
+    [_viewCommentButton addTarget:self action:@selector(viewComment) forControlEvents:UIControlEventTouchDown];
+    [self.navigationController.toolbar addSubview:_viewCommentButton];
+    for (UIView *subview in _viewCommentButton.subviews) {
+        [subview removeFromSuperview];
+    }
     _commentNum = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 40, 32)];
     _commentNum.font = [UIFont systemFontOfSize:12.0];
     _commentNum.textAlignment = NSTextAlignmentRight;
     _commentNum.textColor = [UIColor blackColor];
-    [viewCommentButton addSubview:_commentNum];
+    [_viewCommentButton addSubview:_commentNum];
     
     UIImageView *commentIcon = [[UIImageView alloc] initWithFrame:CGRectMake(44, 0, 16, 16)];
     [commentIcon setImage:[UIImage imageNamed:@"icon-comments.png"]];
     [commentIcon setContentMode:UIViewContentModeScaleToFill];
-    [viewCommentButton addSubview:commentIcon];
+    [_viewCommentButton addSubview:commentIcon];
     
     self.maskView = [[UIView alloc] initWithFrame:[UIScreen mainScreen].bounds];
     self.maskView.backgroundColor = [UIColor blackColor];
@@ -239,11 +241,6 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 #pragma mark - button actions
 -(void)showLogin{
     MyLoginViewController *loginViewController = [[MyLoginViewController alloc] init];
@@ -293,11 +290,17 @@
         [params setObject:self.commentTextView.text forKey:@"message"];
         NSData *data = [[DSXUtil sharedUtil] sendDataForURL:[SITEAPI stringByAppendingString:@"&mod=articlemisc&ac=postcomment"] params:params];
         if (data) {
-            self.commentTextView.text = @"";
             [self hidePostView];
-            [[DSXUtil sharedUtil] successWindowInView:self.view Size:CGSizeMake(120, 80) Message:@"评论发送成功"];
+            self.commentTextView.text = @"";
+            [[DSXUtil sharedUtil] successWindowInView:self.tabBarController.view Size:CGSizeMake(120, 80) Message:@"发送成功"];
         }
     }
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end

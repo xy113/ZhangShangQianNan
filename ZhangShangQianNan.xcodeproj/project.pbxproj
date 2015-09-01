@@ -289,6 +289,9 @@
 		71A1A8F11B94B9CD00072A81 /* icon-information.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A1A8EE1B94B9CD00072A81 /* icon-information.png */; };
 		71A1A8F21B94B9CD00072A81 /* icon-information@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A1A8EF1B94B9CD00072A81 /* icon-information@2x.png */; };
 		71A1A8F31B94B9CD00072A81 /* icon-information@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A1A8F01B94B9CD00072A81 /* icon-information@3x.png */; };
+		71A7214D1B95A17000BC04E0 /* icon-roundadd-blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */; };
+		71A7214E1B95A17000BC04E0 /* icon-roundadd-blue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */; };
+		71A7214F1B95A17000BC04E0 /* icon-roundadd-blue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -659,6 +662,10 @@
 		71A1A8EE1B94B9CD00072A81 /* icon-information.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-information.png"; sourceTree = "<group>"; };
 		71A1A8EF1B94B9CD00072A81 /* icon-information@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-information@2x.png"; sourceTree = "<group>"; };
 		71A1A8F01B94B9CD00072A81 /* icon-information@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-information@3x.png"; sourceTree = "<group>"; };
+		71A721491B9541DF00BC04E0 /* DSXCommon.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DSXCommon.h; sourceTree = "<group>"; };
+		71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue.png"; sourceTree = "<group>"; };
+		71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue@2x.png"; sourceTree = "<group>"; };
+		71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-roundadd-blue@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -829,6 +836,7 @@
 				71A1A6751B9440DF00072A81 /* DSXUtil.m */,
 				71A1A8EB1B947F3800072A81 /* DSXTableView.h */,
 				71A1A8EC1B947F3800072A81 /* DSXTableView.m */,
+				71A721491B9541DF00BC04E0 /* DSXCommon.h */,
 			);
 			path = common;
 			sourceTree = "<group>";
@@ -957,6 +965,9 @@
 		71A1A6D91B9440DF00072A81 /* ui */ = {
 			isa = PBXGroup;
 			children = (
+				71A7214A1B95A17000BC04E0 /* icon-roundadd-blue.png */,
+				71A7214B1B95A17000BC04E0 /* icon-roundadd-blue@2x.png */,
+				71A7214C1B95A17000BC04E0 /* icon-roundadd-blue@3x.png */,
 				71A1A8EE1B94B9CD00072A81 /* icon-information.png */,
 				71A1A8EF1B94B9CD00072A81 /* icon-information@2x.png */,
 				71A1A8F01B94B9CD00072A81 /* icon-information@3x.png */,
@@ -1439,6 +1450,7 @@
 				71A1A7791B9440DF00072A81 /* zxtu.png in Resources */,
 				71A1A7C71B9440DF00072A81 /* icon-refresh@2x.png in Resources */,
 				71A1A8CB1B94411F00072A81 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
+				71A7214E1B95A17000BC04E0 /* icon-roundadd-blue@2x.png in Resources */,
 				71A1A7E31B9440DF00072A81 /* icon-timefill@3x.png in Resources */,
 				71A1A7841B9440DF00072A81 /* newsColumns.plist in Resources */,
 				71A1A7701B9440DF00072A81 /* xing.png in Resources */,
@@ -1487,6 +1499,7 @@
 				71A1A7F11B9440DF00072A81 /* icon-viewnum@2x.png in Resources */,
 				71A1A7A01B9440DF00072A81 /* icon-homefill.png in Resources */,
 				71A1A75F1B9440DF00072A81 /* jiadian.png in Resources */,
+				71A7214D1B95A17000BC04E0 /* icon-roundadd-blue.png in Resources */,
 				71A1A7AB1B9440DF00072A81 /* icon-my-avatar.png in Resources */,
 				71A1A7A61B9440DF00072A81 /* icon-loading.png in Resources */,
 				71A1A7D31B9440DF00072A81 /* icon-search@2x.png in Resources */,
@@ -1512,6 +1525,7 @@
 				71A1A7C61B9440DF00072A81 /* icon-refresh.png in Resources */,
 				71A1A7671B9440DF00072A81 /* lv.png in Resources */,
 				71A1A7A51B9440DF00072A81 /* icon-like@3x.png in Resources */,
+				71A7214F1B95A17000BC04E0 /* icon-roundadd-blue@3x.png in Resources */,
 				71A1A75C1B9440DF00072A81 /* gouche.png in Resources */,
 				71A1A7B11B9440DF00072A81 /* icon-my-favorite.png in Resources */,
 				71A1A7C41B9440DF00072A81 /* icon-picfill@2x.png in Resources */,
@@ -1866,6 +1880,7 @@
 				71A1A6641B94406000072A81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		71A1A6651B94406000072A81 /* Build configuration list for PBXNativeTarget "ZhangShangQianNanTests" */ = {
 			isa = XCConfigurationList;
@@ -1874,6 +1889,7 @@
 				71A1A6671B94406000072A81 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

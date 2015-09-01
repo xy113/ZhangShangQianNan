@@ -94,9 +94,11 @@
     NSString *username = self.usernameField.text;
     NSString *password = self.passwordField.text;
     if (username.length>1 && password.length>5) {
+        UIView *view = [[DSXUtil sharedUtil] waitingWindowInView:self.view Size:CGSizeMake(150, 80) Message:@"正在登录,请稍后.."];
         DSXUserStatus *userstatus = [[DSXUserStatus alloc] init];
         [userstatus loginWithName:username andPassword:password];
         if (userstatus.isLogined) {
+            [DSXUtil closeWindow:view];
             [self loginSucceed];
         }else{
             [self loginFailed];

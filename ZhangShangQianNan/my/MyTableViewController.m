@@ -256,24 +256,26 @@
 - (void)buttonClick:(id)sender{
     if (self.userStatus.isLogined) {
         MyItemView *currentButton = (MyItemView *)sender;
+        UINavigationController *navigation;
         if (currentButton.tag == 101) {
             MyThreadViewController *threadViewController = [[MyThreadViewController alloc] init];
             [threadViewController setTitle:@"我的主题"];
-            [self.navigationController setNavigationBarHidden:NO];
-            [self.navigationController pushViewController:threadViewController animated:YES];
+            navigation = [[UINavigationController alloc] initWithRootViewController:threadViewController];
+            [self presentViewController:navigation animated:YES completion:nil];
         }
         if (currentButton.tag == 102) {
             MyNotificationViewController *notificationController = [[MyNotificationViewController alloc] init];
             [notificationController setTitle:@"我的消息"];
-            [self.navigationController setNavigationBarHidden:NO];
-            [self.navigationController pushViewController:notificationController animated:YES];
+            navigation = [[UINavigationController alloc] initWithRootViewController:notificationController];
+            [self presentViewController:navigation animated:YES completion:nil];
         }
         if (currentButton.tag == 103) {
             MyFavorViewController *favorViewController = [[MyFavorViewController alloc] init];
             [favorViewController setTitle:@"我的收藏"];
-            [self.navigationController setNavigationBarHidden:NO];
-            [self.navigationController pushViewController:favorViewController animated:YES];
+            navigation = [[UINavigationController alloc] initWithRootViewController:favorViewController];
+            [self presentViewController:navigation animated:YES completion:nil];
         }
+        
     }else {
         [self showLogin];
     }

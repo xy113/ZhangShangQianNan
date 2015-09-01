@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Config.h"
-#import "DSXUtil.h"
-#import "DSXUIButton.h"
+#import "DSXCommon.h"
 #import "DSXUserStatus.h"
 
 @interface NewsDetailViewController : UIViewController<UIWebViewDelegate,UITextViewDelegate,UITextFieldDelegate>{
@@ -19,6 +17,7 @@
     NSInteger _refreshTimes;
     UIButton *_bottomButton;
     UILabel *_commentNum;
+    UIButton *_viewCommentButton;
 }
 @property(nonatomic,assign)NSInteger newsID;
 @property(nonatomic,strong)NSDictionary *article;

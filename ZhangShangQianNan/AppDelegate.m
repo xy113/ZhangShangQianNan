@@ -89,7 +89,7 @@
     //板块
     ForumViewController *forumController = [[ForumViewController alloc] init];
     UINavigationController *forumNavigation = [[UINavigationController alloc] initWithRootViewController:forumController];
-    UITabBarItem *formTabBarItem = [self taBarItemWithTitle:nil Image:@"icon-roundaddfillbig.png" SelectedImage:@"icon-roundclosefillbig.png"];
+    UITabBarItem *formTabBarItem = [self taBarItemWithTitle:nil Image:@"icon-roundaddfillbig.png" SelectedImage:@"icon-roundadd-blue.png"];
     [formTabBarItem setImageInsets:UIEdgeInsetsMake(5, 0, -5, 0)];
     [forumNavigation setTabBarItem:formTabBarItem];
     

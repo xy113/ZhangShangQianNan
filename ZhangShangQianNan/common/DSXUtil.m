@@ -124,5 +124,32 @@
     [self showWindowInView:view Image:@"icon-information.png" Size:size Message:message];
 }
 
+- (UIView *)waitingWindowInView:(UIView *)view Size:(CGSize)size Message:(NSString *)message{
+    CGPoint center = view.center;
+    center.y = center.y - 50;
+    UIView *window = [[UIView alloc] initWithFrame:CGRectMake(0, 0, size.width, size.height)];
+    window.center = center;
+    window.backgroundColor = [UIColor blackColor];
+    window.layer.cornerRadius = 5.0;
+    window.layer.masksToBounds = YES;
+    
+    UIActivityIndicatorView *indicator = [[UIActivityIndicatorView alloc] initWithFrame:CGRectMake((size.width-40)/2, 10, 40, 40)];
+    [indicator setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+    [window addSubview:indicator];
+    [indicator startAnimating];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(10, 50, size.width-20, 20)];
+    label.text = message;
+    label.font = [UIFont systemFontOfSize:14.0];
+    label.textColor = [UIColor whiteColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    [window addSubview:label];
+    [view addSubview:window];
+    return window;
+}
+
++ (void)closeWindow:(UIView *)window{
+    [window removeFromSuperview];
+}
 
 @end

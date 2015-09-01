@@ -59,9 +59,10 @@
         [params setObject:message forKey:@"message"];
         [params setObject:@"IPhone 客户端" forKey:@"from"];
         NSData *data = [[DSXUtil sharedUtil] sendDataForURL:[SITEAPI stringByAppendingString:@"&mod=forummisc&ac=reply"] params:params];
-        NSLog(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
+        //NSLog(@"%@",[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding]);
         if ([data length] > 0) {
             [[DSXUtil sharedUtil] successWindowInView:_messageTextView Size:CGSizeMake(100, 90) Message:@"发送成功"];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"replySuccess" object:nil];
             [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(clickBack) userInfo:nil repeats:NO];
         }else {
             [[DSXUtil sharedUtil] wrongWindowInView:_messageTextView Size:CGSizeMake(100, 90) Message:@"发送失败"];

@@ -26,19 +26,22 @@
     [super viewDidLoad];
     self.userStatus = [[DSXUserStatus alloc] init];
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
-
+    
+    CGRect frame = self.view.frame;
+    frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
     self.tableView = [[DSXTableView alloc] initWithFrame:self.view.frame];
     self.tableView.tableViewDelegate = self;
     self.tableView.pageSize = 20;
     [self.view addSubview:self.tableView];
     
     self.operationQueue = [[NSOperationQueue alloc] init];
+    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:@"mymessage"]];
     [self.tableView.waitingView startAnimating];
     [self tableViewStartRefreshing];
 }
 
 - (void)clickBack{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)downloadData{
@@ -50,12 +53,8 @@
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
-    if ([data length] > 2) {
-        if (self.tableView.isRefreshing) {
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"mymessage"];
-        }
-    }else {
-        data = [[NSUserDefaults standardUserDefaults] dataForKey:@"mymessage"];
+    if (self.tableView.isRefreshing && data.length > 2) {
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"mymessage"];
     }
     [self.tableView reloadTableViewWithData:data];
 }
@@ -69,16 +68,17 @@
 #pragma mark - Table view data source
 - (void)tableViewStartRefreshing{
     _page = 1;
+    [self.tableView setIsRefreshing:YES];
     [self downloadData];
+}
+
+- (void)tableViewRefreshedNothing{
+    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 80) Message:@"你没有收到任何消息"];
 }
 
 - (void)tableViewStartLoading{
     _page++;
     [self downloadData];
-}
-
-- (void)tableViewLoadNothing{
-    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 80) Message:@"你没有收到任何消息"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

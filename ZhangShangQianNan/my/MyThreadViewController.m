@@ -8,10 +8,7 @@
 
 #import "MyThreadViewController.h"
 #import "ForumThreadViewController.h"
-#import "DSXUIButton.h"
-#import "DSXUtil.h"
-#import "Config.h"
-#import "DSXControl.h"
+#import "DSXCommon.h"
 
 
 @interface MyThreadViewController ()
@@ -30,13 +27,15 @@
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
     
     CGRect frame = self.view.frame;
-    frame.size.height = frame.size.height - self.tabBarController.tabBar.frame.size.height;
+    frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
     self.mainTableView = [[DSXTableView alloc] initWithFrame:frame];
     self.mainTableView.tableViewDelegate = self;
     self.mainTableView.pageSize = 20;
     [self.view addSubview:self.mainTableView];
-
+    
+    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:@"mythread"]];
     self.operationQueue = [[NSOperationQueue alloc] init];
+    [self.mainTableView.waitingView startAnimating];
     [self tableViewStartRefreshing];
 }
 
@@ -49,33 +48,30 @@
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
-    if ([data length] > 2) {
-        if (self.mainTableView.isRefreshing) {
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"mythread"];
-        }
-    }else {
-        data = [[NSUserDefaults standardUserDefaults] dataForKey:@"mythread"];
+    if (self.mainTableView.isRefreshing && data.length > 2) {
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:@"mythread"];
     }
     [self.mainTableView reloadTableViewWithData:data];
 }
 
 - (void)clickBack{
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Table view data source
 - (void)tableViewStartRefreshing{
     _page = 1;
+    [self.mainTableView setIsRefreshing:YES];
     [self downloadData];
+}
+
+- (void)tableViewRefreshedNothing{
+    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 90) Message:@"你还没有发布主题"];
 }
 
 - (void)tableViewStartLoading{
     _page++;
     [self downloadData];
-}
-
-- (void)tableViewLoadNothing{
-    [[DSXUtil sharedUtil] informationWindowInView:self.view Size:CGSizeMake(180, 90) Message:@"你还没有发布主题"];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

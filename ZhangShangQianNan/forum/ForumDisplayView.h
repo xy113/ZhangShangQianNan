@@ -23,6 +23,7 @@
     UIRefreshControl *_refreshControl;
     UILabel *_footerView;
     BOOL _isRefreshing;
+    UIActivityIndicatorView *_waitingView;
 }
 
 @property(nonatomic,strong)NSString *filter;

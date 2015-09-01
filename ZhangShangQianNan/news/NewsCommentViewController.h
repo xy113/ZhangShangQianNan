@@ -7,18 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DSXTableView.h"
 
-@interface NewsCommentViewController : UITableViewController<UIScrollViewDelegate>{
+@interface NewsCommentViewController : UIViewController<DSXTableViewDelegate>{
     @private
     int _page;
-    UIRefreshControl *_refreshControl;
-    UILabel *_footerView;
-    UILabel *_label;
-    BOOL _isLoadMore;
-    BOOL _isRefreshing;
+    UILabel *_sizeLable;
+    UILabel *_tipsView;
 }
 
 @property(nonatomic,assign)NSInteger aid;
-@property(nonatomic,retain)NSMutableArray *commentList;
+@property(nonatomic,retain)DSXTableView *mainTableView;
 @property(nonatomic,retain)NSOperationQueue *operationQueue;
 @end

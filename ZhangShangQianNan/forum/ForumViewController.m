@@ -7,9 +7,10 @@
 //
 
 #import "ForumViewController.h"
-#import "DSXUIButton.h"
 #import "MyLoginViewController.h"
 #import "MyTableViewController.h"
+#import "MyThreadViewController.h"
+#import "DSXCommon.h"
 
 @implementation ForumViewController
 
@@ -28,20 +29,13 @@
     [self.navigationController.tabBarItem setTitle:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userStatusChanged) name:UserStatusChangedNotification object:nil];
     self.userStatus = [[DSXUserStatus alloc] init];
-    if (userStatus.isLogined) {
-        UIImageView *avatarView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-        [avatarView setImage:userStatus.avatar];
-        [avatarView setContentMode:UIViewContentModeScaleToFill];
-        avatarView.layer.cornerRadius = 15;
-        avatarView.layer.masksToBounds = YES;
-        //UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] initWithCustomView:avatarView];
-        UIBarButtonItem *leftButtonItem = [[UIBarButtonItem alloc] init];
-        leftButtonItem.title = @"我";
-        
-        leftButtonItem.target = self;
-        leftButtonItem.action = @selector(goMyCenter);
-        leftButtonItem.customView = avatarView;
-        self.navigationItem.leftBarButtonItem = leftButtonItem;
+    if (self.userStatus.isLogined) {
+        UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        button.layer.cornerRadius = 5.0;
+        button.layer.masksToBounds = YES;
+        [button setImage:self.userStatus.avatar forState:UIControlStateNormal];
+        [button addTarget:self action:@selector(goMyCenter) forControlEvents:UIControlEventTouchDown];
+        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:button];
         
     }else{
         self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithImage:@"icon-my-avatar.png" target:self action:@selector(showLogin)];
@@ -51,7 +45,7 @@
     //集合视图
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     CGRect frame = self.view.frame;
-    frame.size.height = frame.size.height - 45;
+    frame.size.height = frame.size.height - (self.navigationController.navigationBar.frame.size.height + self.tabBarController.tabBar.frame.size.height + 18);
     self.forumCollectionView = [[UICollectionView alloc] initWithFrame:frame collectionViewLayout:flowLayout];
     self.forumCollectionView.backgroundColor = [UIColor whiteColor];
     self.forumCollectionView.delegate = self;
@@ -71,7 +65,7 @@
     NSString *plistPath = [[NSBundle mainBundle] pathForResource:@"forums" ofType:@"plist"];
     self.forumList = [NSArray arrayWithContentsOfFile:plistPath];
 
-    //字控制器
+    //子控制器
     self.collectionViewController = [[UIViewController alloc] init];
     self.collectionViewController.view =self.forumCollectionView;
     [self addChildViewController:collectionViewController];
@@ -110,8 +104,12 @@
 }
 
 - (void)goMyCenter{
-    MyTableViewController *myViewController = [[MyTableViewController alloc] init];
-    [self.navigationController pushViewController:myViewController animated:YES];
+    //MyTableViewController *myViewController = [[MyTableViewController alloc] init];
+    //[self.navigationController pushViewController:myViewController animated:YES];
+    //[self.tabBarController setSelectedIndex:4];
+    MyThreadViewController *threadViewController = [[MyThreadViewController alloc] init];
+    threadViewController.title = @"我的主题";
+    [self.navigationController pushViewController:threadViewController animated:YES];
 }
 
 - (void)userStatusChanged{

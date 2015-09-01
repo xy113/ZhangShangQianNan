@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Config.h"
 #import "ForumDisplayCell.h"
 #import "DSXTableView.h"
 

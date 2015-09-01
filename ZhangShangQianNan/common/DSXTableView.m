@@ -56,7 +56,9 @@
 
 - (void)refreshBegin{
     self.isRefreshing = YES;
-    [self.tableViewDelegate tableViewStartRefreshing];
+    if ([self.tableViewDelegate respondsToSelector:@selector(tableViewStartRefreshing)]) {
+        [self.tableViewDelegate tableViewStartRefreshing];
+    }
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
@@ -66,8 +68,16 @@
             [self reloadTableViewWithArray:array];
         }
     }else {
+        if (self.isRefreshing) {
+            if ([self.tableViewDelegate respondsToSelector:@selector(tableViewRefreshedNothing)]) {
+                [self.tableViewDelegate tableViewRefreshedNothing];
+            }
+        }else {
+            if ([self.tableViewDelegate respondsToSelector:@selector(tableViewLoadedNothing)]) {
+                [self.tableViewDelegate tableViewLoadedNothing];
+            }
+        }
         [self reloadEnd];
-        [self.tableViewDelegate tableViewLoadNothing];
     }
 }
 
@@ -78,7 +88,6 @@
         self.footerView.hidden = NO;
     }
     if (self.isRefreshing) {
-        self.isRefreshing = NO;
         [self.rows removeAllObjects];
         [self reloadData];
     }
@@ -90,12 +99,24 @@
 }
 
 - (void)reloadEnd{
+    if (self.isRefreshing) {
+        if ([self.tableViewDelegate respondsToSelector:@selector(tableViewEndRefreshing)]) {
+            [self.tableViewDelegate tableViewEndRefreshing];
+        }
+    }else {
+        if ([self.tableViewDelegate respondsToSelector:@selector(tableViewEndLoading)]) {
+            [self.tableViewDelegate tableViewEndLoading];
+        }
+    }
     self.footerView.text = @"上拉加载更多..";
     if ([self.refreshControl isRefreshing]) {
         [self.refreshControl endRefreshing];
     }
     if ([self.waitingView isAnimating]) {
         [self.waitingView stopAnimating];
+    }
+    if (self.isRefreshing) {
+        self.isRefreshing = NO;
     }
 }
 
@@ -125,7 +146,11 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return [self.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    if ([self.tableViewDelegate respondsToSelector:@selector(tableView:heightForRowAtIndexPath:)]) {
+        return [self.tableViewDelegate tableView:tableView heightForRowAtIndexPath:indexPath];
+    }else {
+        return 50.0;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -133,7 +158,17 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [self.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    if ([self.tableViewDelegate respondsToSelector:@selector(tableView:didSelectRowAtIndexPath:)]) {
+        [self.tableViewDelegate tableView:tableView didSelectRowAtIndexPath:indexPath];
+    }
+}
+
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath{
+    if ([self.tableViewDelegate respondsToSelector:@selector(tableView:shouldHighlightRowAtIndexPath:)]) {
+        return [self.tableViewDelegate tableView:tableView shouldHighlightRowAtIndexPath:indexPath];
+    }else {
+        return YES;
+    }
 }
 
 
@@ -143,7 +178,9 @@
         if (self.contentOffset.y > (self.contentSize.height - self.frame.size.height)+50) {
             if (self.footerView.hidden == NO) {
                 self.footerView.text = @"正在加载更多..";
-                [self.tableViewDelegate tableViewStartLoading];
+                if ([self.tableViewDelegate respondsToSelector:@selector(tableViewStartLoading)]) {
+                    [self.tableViewDelegate tableViewStartLoading];
+                }
             }
         }
     }

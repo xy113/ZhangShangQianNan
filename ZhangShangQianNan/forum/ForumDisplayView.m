@@ -38,11 +38,17 @@
     _footerView.hidden = YES;
     self.self.tableFooterView = _footerView;
     
-    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:_keyName]];
+    CGPoint center = self.center;
+    center.y = center.y - 50;
+    _waitingView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    _waitingView.center = center;
+    [self addSubview:_waitingView];
+    
     if (self.operationQueue == nil) {
         self.operationQueue = [[NSOperationQueue alloc] init];
     }
-    [_refreshControl beginRefreshing];
+    [self reloadTableViewWithData:[[NSUserDefaults standardUserDefaults] dataForKey:_keyName]];
+    [_waitingView startAnimating];
     [self refreshBegin];
 }
 
@@ -56,7 +62,7 @@
                 _footerView.hidden = NO;
             }
             if (_isRefreshing) {
-                _isRefreshing = NO;
+                [[NSUserDefaults standardUserDefaults] setObject:data forKey:_keyName];
                 [self.rows removeAllObjects];
                 [self reloadData];
             }
@@ -65,18 +71,24 @@
             }
             [self reloadData];
         }
+    }else {
+        _footerView.hidden = YES;
+    }
+    if (_isRefreshing) {
+        _isRefreshing = NO;
     }
     if ([_refreshControl isRefreshing]) {
         [_refreshControl endRefreshing];
+    }
+    if ([_waitingView isAnimating]) {
+        [_waitingView stopAnimating];
     }
     _footerView.text = @"上拉加载更多";
 }
 
 - (void)downloadData{
     [self.operationQueue addOperationWithBlock:^{
-        NSString *urlString = [SITEAPI stringByAppendingFormat:@"&mod=forumdisplay&filter=%@&page=%d",self.filter,_page];
-        NSData *data = [[DSXUtil sharedUtil] dataWithURL:urlString];
-        if (data) {[[NSUserDefaults standardUserDefaults] setObject:data forKey:_keyName];}
+        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=forumdisplay&filter=%@&page=%d",self.filter,_page]];
         [self performSelectorOnMainThread:@selector(reloadTableViewWithData:) withObject:data waitUntilDone:YES];
     }];
 }
@@ -138,6 +150,5 @@
         }
     }
 }
-
 
 @end

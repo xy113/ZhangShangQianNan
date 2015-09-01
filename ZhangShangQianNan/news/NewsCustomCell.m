@@ -18,6 +18,7 @@
     [self drawImageView];
     [self drawTitleView];
     [self drawAttrView];
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 }
 
 - (void)drawImageView{
@@ -30,7 +31,7 @@
 - (void)drawTitleView{
     UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(98, 10, self.contentView.frame.size.width-98, 50)];
     titleView.text = [self.cellData objectForKey:@"title"];
-    titleView.font = [UIFont systemFontOfSize:16.0f weight:600];
+    titleView.font = [UIFont systemFontOfSize:16.0f];
     titleView.textAlignment = NSTextAlignmentLeft;
     titleView.layoutMargins = UIEdgeInsetsMake(0, 5, 0, 5);
     titleView.numberOfLines = 2;

@@ -7,21 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Config.h"
-#import "DSXUtil.h"
 #import "ForumPicViewCell.h"
+#import "DSXTableView.h"
 
-@interface ForumPicViewController : UIViewController<UITableViewDelegate,UITableViewDataSource,UIScrollViewDelegate>{
+@class DSXUserStatus;
+@interface ForumPicViewController : UIViewController<DSXTableViewDelegate>{
     @private
     int _page;
-    UIRefreshControl *_refreshControl;
-    UILabel *_footerView;
-    BOOL _showLoadMore;
-    BOOL _isRefreshing;
 }
-
-@property(nonatomic,strong)NSMutableArray *piclist;
-@property(nonatomic,retain)UITableView *mainTableView;
+@property(nonatomic,retain)DSXUserStatus *userStatus;
+@property(nonatomic,retain)DSXTableView *mainTableView;
 @property(nonatomic,retain)NSOperationQueue *operationQueue;
 
 @end

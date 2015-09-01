@@ -26,6 +26,7 @@
     self.view.backgroundColor = WHITEBGCOLOR;
     self.userStatus = [[DSXUserStatus alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userStatusChanged) name:UserStatusChangedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(replySuccess) name:@"replySuccess" object:nil];
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
     UIBarButtonItem *shareBarButton = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleShare target:self action:@selector(clickShare)];
     UIBarButtonItem *favorBarButton = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleFavor target:self action:@selector(addFavorite)];
@@ -139,6 +140,11 @@
 
 - (void)userStatusChanged{
     self.userStatus = [DSXUserStatus new];
+}
+
+- (void)replySuccess{
+    _page = _totalPage;
+    [self loadRequest];
 }
 
 - (void)clickBack{

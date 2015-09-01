@@ -17,13 +17,14 @@
     NSString *_keyName;
     UIRefreshControl *_refreshControl;
     UILabel *_footerView;
-    BOOL _showLoadMore;
     BOOL _isRefreshing;
+    UIActivityIndicatorView *_waitingView;
 }
 @property(nonatomic,assign)int catid;
 @property(nonatomic,retain)NSMutableArray *rows;
 @property(nonatomic,assign)id<ShowNewsDetailDelegate> detailDelegate;
 @property(nonatomic,retain)NSOperationQueue *operationQueue;
 
+- (instancetype)initWithFrame:(CGRect)frame;
 - (void)show;
 @end

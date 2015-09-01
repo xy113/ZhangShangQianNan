@@ -14,9 +14,13 @@
 @optional
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)tableViewStartRefreshing;
+- (void)tableViewEndRefreshing;
+- (void)tableViewRefreshedNothing;
 - (void)tableViewStartLoading;
-- (void)tableViewLoadNothing;
+- (void)tableViewEndLoading;
+- (void)tableViewLoadedNothing;
 
 @end
 

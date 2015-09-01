@@ -7,10 +7,8 @@
 //
 
 #import "NewsCommentViewController.h"
-#import "DSXUIButton.h"
-#import "DSXUtil.h"
-#import "Config.h"
 #import "UIImageView+WebCache.h"
+#import "DSXCommon.h"
 
 @interface NewsCommentViewController ()
 
@@ -18,106 +16,77 @@
 
 @implementation NewsCommentViewController
 @synthesize aid;
-@synthesize commentList;
+@synthesize mainTableView;
+@synthesize operationQueue;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setTitle:@"全部评论"];
     [self.view setBackgroundColor:WHITEBGCOLOR];
+    //[self.navigationController setToolbarHidden:NO];
     self.navigationItem.leftBarButtonItem = [[DSXUIButton sharedButton] barButtonItemWithStyle:DSXBarButtonStyleBack target:self action:@selector(clickBack)];
     
-    _refreshControl = [[UIRefreshControl alloc] init];
-    _refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新"];
-    [_refreshControl addTarget:self action:@selector(refreshBegin) forControlEvents:UIControlEventValueChanged];
-    self.refreshControl = _refreshControl;
-    
-    _footerView = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, SWIDTH, 50)];
-    _footerView.textAlignment = NSTextAlignmentCenter;
-    _footerView.font = [UIFont systemFontOfSize:14.0];
-    _footerView.textColor = [UIColor grayColor];
-    self.tableView.tableFooterView = _footerView;
-    
-    _label = [[UILabel alloc] init];
-    _label.font = [UIFont systemFontOfSize:16.0];
-    _label.numberOfLines = 0;
-    
-    self.commentList = [NSMutableArray array];
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    self.tableView.separatorInset = UIEdgeInsetsMake(10, 0, 10, 10);
+    CGFloat tableHeight = SHEIGHT - (self.navigationController.navigationBar.frame.size.height + 18);
+    self.mainTableView = [[DSXTableView alloc] initWithFrame:CGRectMake(0, self.view.frame.origin.y, SWIDTH, tableHeight)];
+    self.mainTableView.pageSize = 20;
+    self.mainTableView.tableViewDelegate = self;
+    [self.view addSubview:self.mainTableView];
     self.operationQueue = [[NSOperationQueue alloc] init];
-    _footerView.text = @"正在加载评论..";
-    [self refreshBegin];
+    [self.mainTableView.waitingView startAnimating];
+    [self tableViewStartRefreshing];
+    
+    _sizeLable = [[UILabel alloc] initWithFrame:CGRectZero];
+    _sizeLable.font = [UIFont systemFontOfSize:16.0];
+    _sizeLable.numberOfLines = 0;
+    _tipsView = [[UILabel alloc] init];
+    _tipsView.hidden = YES;
+    [self.mainTableView addSubview:_tipsView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    _tipsView.hidden = YES;
 }
 
 - (void)clickBack{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)refreshBegin{
-    _page = 1;
-    _isRefreshing = YES;
-    [self downloadData];
-}
-
 - (void)downloadData{
     [self.operationQueue addOperationWithBlock:^{
-        NSString *urlString = [SITEAPI stringByAppendingFormat:@"&mod=articlemisc&ac=fetchcomment&aid=%ld&page=%d",(long)self.aid,_page];
-        NSData *data = [[DSXUtil sharedUtil] dataWithURL:urlString];
+        NSData *data = [[DSXUtil sharedUtil] dataWithURL:[SITEAPI stringByAppendingFormat:@"&mod=articlemisc&ac=fetchcomment&aid=%ld&page=%d",(long)self.aid,_page]];
         [self performSelectorOnMainThread:@selector(reloadTableViewWithData:) withObject:data waitUntilDone:YES];
     }];
 }
 
 - (void)reloadTableViewWithData:(NSData *)data{
-    if ([data length] > 2) {
-        id array = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-        if ([array isKindOfClass:[NSArray class]]) {
-            if ([array count] < 20) {
-                _footerView.text = @"";
-                _isLoadMore = NO;
-            }else {
-                _footerView.text = @"上拉加载更多";
-                _isLoadMore = YES;
-            }
-            if (_isRefreshing) {
-                [self.commentList removeAllObjects];
-                [self.tableView reloadData];
-                _isRefreshing = NO;
-            }
-            for (NSDictionary *comment in array) {
-                [self.commentList addObject:comment];
-            }
-            [self.tableView reloadData];
-        }
-    }else {
-        _footerView.text = @"";
-        _isLoadMore = NO;
-    }
-    if ([_refreshControl isRefreshing]) {
-        [_refreshControl endRefreshing];
-    }
+    [self.mainTableView reloadTableViewWithData:data];
 }
 
 #pragma mark - UITableView delegate
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView{
-    return 1;
+- (void)tableViewStartRefreshing{
+    _page = 1;
+    [self.mainTableView setIsRefreshing:YES];
+    [self downloadData];
 }
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [self.commentList count];
+- (void)tableViewRefreshedNothing{
+    CGPoint center = self.view.center;
+    _tipsView.text = @"文章暂无评论";
+    [_tipsView sizeToFit];
+    _tipsView.center = CGPointMake(center.x, 50);
+    _tipsView.hidden = NO;
 }
 
+- (void)tableViewStartLoading{
+    _page++;
+    [self downloadData];
+}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    _label.frame = CGRectMake(0, 0, SWIDTH-50, 0);
-    _label.text = [self.commentList[indexPath.row] objectForKey:@"message"];
-    [_label sizeToFit];
-    return _label.frame.size.height + 60;
+    [_sizeLable setFrame:CGRectMake(0, 0, SWIDTH-50, 0)];
+    [_sizeLable setText:[self.mainTableView.rows[indexPath.row] objectForKey:@"message"]];
+    [_sizeLable sizeToFit];
+    return _sizeLable.frame.size.height + 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -131,7 +100,7 @@
     }
 
     CGFloat width = cell.contentView.frame.size.width;
-    NSDictionary *comment = [self.commentList objectAtIndex:indexPath.row];
+    NSDictionary *comment = [self.mainTableView.rows objectAtIndex:indexPath.row];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 30, 30)];
     [imageView sd_setImageWithURL:[comment objectForKey:@"userpic"]];
     imageView.layer.cornerRadius = 15.0;
@@ -166,21 +135,9 @@
     return NO;
 }
 
-#pragma mark - scrollView delegate
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
-    if (scrollView == self.tableView) {
-        if (self.tableView.contentOffset.y>(self.tableView.contentSize.height - SHEIGHT)+50) {
-            if (_isLoadMore) {
-                [self loadMore];
-            }
-        }
-    }
-}
-
-- (void)loadMore{
-    _page++;
-    _footerView.text = @"正在加载更多..";
-    [self downloadData];
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end
