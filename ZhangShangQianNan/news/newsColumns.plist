@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>caitd</key>
+		<string>3</string>
+		<key>catname</key>
+		<string>黔南</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>2</string>
+		<key>catname</key>
+		<string>贵州</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>4</string>
+		<key>catname</key>
+		<string>国内</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>5</string>
+		<key>catname</key>
+		<string>国际</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>6</string>
+		<key>catname</key>
+		<string>社会</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>7</string>
+		<key>catname</key>
+		<string>科技</string>
+	</dict>
+	<dict>
+		<key>catid</key>
+		<string>8</string>
+		<key>catname</key>
+		<string>娱乐</string>
+	</dict>
+</array>
+</plist>
