@@ -96,6 +96,9 @@
         }
     }
     // Configure the cell...
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     NSDictionary *message = [self.tableView.rows objectAtIndex:indexPath.row];
 //    cell.textLabel.text = [message objectForKey:@"note"];
 //    cell.textLabel.font = [UIFont systemFontOfSize:16.0 weight:500];

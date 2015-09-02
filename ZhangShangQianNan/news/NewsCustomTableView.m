@@ -29,6 +29,7 @@
         self.delegate = self;
         self.dataSource = self;
         self.separatorInset = UIEdgeInsetsMake(0, 10, 0, 10);
+        self.autoresizesSubviews = YES;
     }
     return self;
 }
@@ -179,7 +180,9 @@
             [subview removeFromSuperview];
         }
     }
-    cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = self.frame.size.width;
+    cell.contentView.frame = frame;
     cell.tag = [[dictionary objectForKey:@"aid"] intValue];
     [cell setCellForDictionary:dictionary];
     return cell;

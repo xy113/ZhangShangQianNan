@@ -87,8 +87,11 @@
             [subview removeFromSuperview];
         }
     }
-    NSDictionary *thread = [self.mainTableView.rows objectAtIndex:indexPath.row];
     
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
+    NSDictionary *thread = [self.mainTableView.rows objectAtIndex:indexPath.row];
     UILabel *titleView = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, cell.contentView.frame.size.width-20, 50)];
     titleView.text = [thread objectForKey:@"subject"];
     titleView.font = [UIFont systemFontOfSize:18.0f weight:600];

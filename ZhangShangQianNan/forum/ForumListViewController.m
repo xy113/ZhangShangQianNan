@@ -48,6 +48,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     if ([self.mainTableView.waitingView isAnimating]) {
         [self.mainTableView.waitingView stopAnimating];
     }
@@ -125,6 +126,9 @@
         }
     }
     // Configure the cell...
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     cell.tag = [[thread objectForKey:@"tid"] intValue];
     [cell setCellForDictionary:thread];
     return cell;

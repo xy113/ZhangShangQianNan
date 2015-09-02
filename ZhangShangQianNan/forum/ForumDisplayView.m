@@ -129,6 +129,9 @@
             [subview removeFromSuperview];
         }
     }
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = self.frame.size.width;
+    cell.contentView.frame = frame;
     cell.tag = [[dict objectForKey:@"tid"] intValue];
     [cell setCellForDictionary:dict];
     return cell;

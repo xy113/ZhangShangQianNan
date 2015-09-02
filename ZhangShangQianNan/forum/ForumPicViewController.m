@@ -87,6 +87,9 @@
             [subview removeFromSuperview];
         }
     }
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     NSDictionary *dict = [self.mainTableView.rows objectAtIndex:indexPath.row];
     [cell setCellForDictionary:dict];
     [cell setTag:[[dict objectForKey:@"tid"] intValue]];

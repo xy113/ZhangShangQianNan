@@ -97,6 +97,9 @@
         }
     }
     // Configure the cell...
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     NSDictionary *thread = [self.tableView.rows objectAtIndex:indexPath.row];
     cell.textLabel.text = [thread objectForKey:@"title"];
     cell.textLabel.font = [UIFont systemFontOfSize:18.0f weight:500];

@@ -45,6 +45,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     _tipsView.hidden = YES;
 }
 
@@ -98,8 +99,9 @@
             [subview removeFromSuperview];
         }
     }
-
-    CGFloat width = cell.contentView.frame.size.width;
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     NSDictionary *comment = [self.mainTableView.rows objectAtIndex:indexPath.row];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 30, 30)];
     [imageView sd_setImageWithURL:[comment objectForKey:@"userpic"]];
@@ -107,21 +109,21 @@
     imageView.layer.masksToBounds = YES;
     [cell.contentView addSubview:imageView];
     
-    UILabel *nameView = [[UILabel alloc] initWithFrame:CGRectMake(45, 15, width-40, 20)];
+    UILabel *nameView = [[UILabel alloc] initWithFrame:CGRectMake(45, 15, SWIDTH-40, 20)];
     nameView.text = [comment objectForKey:@"username"];
     nameView.font = [UIFont systemFontOfSize:14.0 weight:300];
     nameView.textColor = [UIColor grayColor];
     [nameView sizeToFit];
     [cell.contentView addSubview:nameView];
     
-    UILabel *timeView = [[UILabel alloc] initWithFrame:CGRectMake(width-110, 15, 100, 20)];
+    UILabel *timeView = [[UILabel alloc] initWithFrame:CGRectMake(SWIDTH-110, 15, 100, 20)];
     timeView.text = [comment objectForKey:@"dateline"];
     timeView.font = [UIFont systemFontOfSize:14.0];
     timeView.textColor = [UIColor grayColor];
     timeView.textAlignment = NSTextAlignmentRight;
     [cell.contentView addSubview:timeView];
     
-    UILabel *messageView = [[UILabel alloc] initWithFrame:CGRectMake(45, 40, width-50, 0)];
+    UILabel *messageView = [[UILabel alloc] initWithFrame:CGRectMake(45, 40, SWIDTH-50, 0)];
     messageView.text = [comment objectForKey:@"message"];
     messageView.font = [UIFont systemFontOfSize:16.0];
     messageView.backgroundColor = [UIColor clearColor];

@@ -106,6 +106,7 @@
 
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     _menuBar.frame = CGRectMake(0, -20, SWIDTH, 70);
 }
 
@@ -272,6 +273,10 @@
             [subview removeFromSuperview];
         }
     }
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
+    
     NSDictionary *forum = [[self.forumList[indexPath.section] objectForKey:@"forums"] objectAtIndex:indexPath.row];
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(10, 15, 40, 40)];
     imageView.image = [UIImage imageNamed:[forum objectForKey:@"forumicon"]];

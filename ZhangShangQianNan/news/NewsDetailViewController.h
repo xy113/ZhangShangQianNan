@@ -13,8 +13,6 @@
 @interface NewsDetailViewController : UIViewController<UIWebViewDelegate,UITextViewDelegate,UITextFieldDelegate>{
     @private
     UIActivityIndicatorView *_waitingView;
-    UIButton *_refreshButton;
-    NSInteger _refreshTimes;
     UIButton *_bottomButton;
     UILabel *_commentNum;
     UIButton *_viewCommentButton;

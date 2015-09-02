@@ -129,10 +129,12 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.navigationController setToolbarHidden:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:YES];
     if ([_waitingView isAnimating]) {
         [_waitingView stopAnimating];

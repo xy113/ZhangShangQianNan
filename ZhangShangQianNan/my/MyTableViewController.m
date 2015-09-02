@@ -75,6 +75,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     [self.navigationController setNavigationBarHidden:YES];
 }
 
@@ -119,9 +120,11 @@
             [subview removeFromSuperview];
         }
     }
-    CGFloat width = cell.contentView.frame.size.width;
+    CGRect frame = cell.contentView.frame;
+    frame.size.width = SWIDTH;
+    cell.contentView.frame = frame;
     if (indexPath.section == 0) {
-        CGFloat itemWidth = width/3;
+        CGFloat itemWidth = SWIDTH/3;
         MyItemView *threadView = [[MyItemView alloc] initWithFrame:CGRectMake(0, 10, itemWidth, 50)];
         [threadView setImage:@"icon-timefill.png" title:@"主题"];
         [threadView setTag:101];

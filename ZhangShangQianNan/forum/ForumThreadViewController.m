@@ -79,6 +79,7 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     if (_totalPage > 1) {
         self.navigationController.toolbarHidden = NO;
     }else {
@@ -87,6 +88,7 @@
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:YES];
     if ([_waitingView isAnimating]) {
         [_waitingView stopAnimating];
