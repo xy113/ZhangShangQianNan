@@ -179,6 +179,7 @@
             [subview removeFromSuperview];
         }
     }
+    cell.autoresizingMask = UIViewAutoresizingFlexibleWidth;
     cell.tag = [[dictionary objectForKey:@"aid"] intValue];
     [cell setCellForDictionary:dictionary];
     return cell;

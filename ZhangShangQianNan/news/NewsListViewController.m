@@ -49,6 +49,7 @@
         tableView.catid = [[columns[i] objectForKey:@"catid"] intValue];
         tableView.detailDelegate = self;
         tableView.operationQueue = operationQueue;
+        tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [tableView show];
         [self.mainScrollView addSubview:tableView];
     }
