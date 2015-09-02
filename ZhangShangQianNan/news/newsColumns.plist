@@ -3,44 +3,44 @@
 <plist version="1.0">
 <array>
 	<dict>
-		<key>caitd</key>
-		<string>3</string>
+		<key>catid</key>
+		<integer>3</integer>
 		<key>catname</key>
 		<string>黔南</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>2</string>
+		<integer>2</integer>
 		<key>catname</key>
 		<string>贵州</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>4</string>
+		<integer>4</integer>
 		<key>catname</key>
 		<string>国内</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>5</string>
+		<integer>5</integer>
 		<key>catname</key>
 		<string>国际</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>6</string>
+		<integer>6</integer>
 		<key>catname</key>
 		<string>社会</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>7</string>
+		<integer>7</integer>
 		<key>catname</key>
 		<string>科技</string>
 	</dict>
 	<dict>
 		<key>catid</key>
-		<string>8</string>
+		<integer>8</integer>
 		<key>catname</key>
 		<string>娱乐</string>
 	</dict>
